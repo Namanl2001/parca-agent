@@ -268,8 +268,8 @@ func main() {
 	}
 
 	if runtime.GOARCH == "arm64" {
-		level.Error(logger).Log("msg", "ARM64 support is currently in progress. See https://github.com/parca-dev/parca-agent/discussions/1376")
-		os.Exit(1)
+		flags.DWARFUnwinding.Disable = true
+		level.Info(logger).Log("msg", "ARM64 support is currently in beta. DWARF-based unwinding is not supported yet, see https://github.com/parca-dev/parca-agent/discussions/1376 for more details")
 	}
 
 	if byteorder.GetHostByteOrder() == binary.BigEndian {

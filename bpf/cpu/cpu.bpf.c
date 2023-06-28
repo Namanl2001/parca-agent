@@ -5,9 +5,9 @@
 // SPDX-License-Identifier: GPL-2.0-only
 // Copyright 2022 The Parca Authors
 
-#include "../common.h"
-#include "../vmlinux.h"
-#include "hash.h"
+#include <common.h>
+#include <vmlinux.h>
+#include <hash.h>
 
 #include <bpf/bpf_core_read.h>
 #include <bpf/bpf_endian.h>
@@ -521,6 +521,8 @@ static __always_inline bool is_kthread() {
   return mm == NULL;
 }
 
+// TODO: Adapt to CO-RE.
+//
 // avoid R0 invalid mem access 'scalar'
 // Port of `task_pt_regs` in BPF.
 static __always_inline bool retrieve_task_registers(u64 *ip, u64 *sp, u64 *bp) {
@@ -1021,9 +1023,9 @@ static __always_inline bool set_initial_state(struct pt_regs *regs) {
     }
   } else {
     // in userspace
-    unwind_state->ip = regs->ip;
-    unwind_state->sp = regs->sp;
-    unwind_state->bp = regs->bp;
+    unwind_state->ip = PT_REGS_IP_CORE(regs);
+    unwind_state->sp = PT_REGS_SP_CORE(regs);
+    unwind_state->bp = PT_REGS_FP_CORE(regs);
   }
 
   return true;
