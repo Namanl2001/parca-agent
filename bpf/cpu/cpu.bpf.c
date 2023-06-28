@@ -978,7 +978,7 @@ int walk_user_stacktrace_impl(struct bpf_perf_event_data *ctx) {
 }
 
 // Set up the initial registers to start unwinding.
-static __always_inline bool set_initial_state(struct user_pt_regs *regs) {
+static __always_inline bool set_initial_state(bpf_user_pt_regs_t *regs) {
   u32 zero = 0;
 
   unwind_state_t *unwind_state = bpf_map_lookup_elem(&heap, &zero);
