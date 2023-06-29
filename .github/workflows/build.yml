@@ -9,7 +9,6 @@ on:
     branches:
     - main
     - release-*
-    - gh-ci
 
 env:
   # renovate: datasource=go depName=mvdan.cc/gofumpt
