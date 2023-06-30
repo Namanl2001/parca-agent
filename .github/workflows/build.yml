@@ -61,6 +61,17 @@ jobs:
           sudo apt-get update -y
           sudo apt -y install qemu-system-x86 curl
 
+      - name: Set up Clang
+        uses: KyleMayes/install-llvm-action@f8f2154d96f018dcb600739c4978bfc35f435422 # v1.8.1
+        with:
+          version: "14"
+
+      - name: clang version
+        run:  |
+          clang -v
+          ld --version
+          ld.lld --version
+
       - name: Install libbpf dependencies
         run: |
           sudo apt-get update -y
@@ -71,9 +82,6 @@ jobs:
 
       - name: Build libbpf
         run: make libbpf
-
-      - name: Build BPF
-        run: make bpf
 
       - name: Build initramfs
         run: |
@@ -132,6 +140,9 @@ jobs:
 
       - name: Initialize and update git submodules
         run: git submodule init && git submodule update
+
+      - name: Build BPF
+        run: make bpf
 
       - name: Build
         run: make build
