@@ -61,6 +61,9 @@ jobs:
           sudo apt-get update -y
           sudo apt -y install qemu-system-x86 curl
 
+      - name: Build libbpf
+        run: make libbpf
+
       - name: Build initramfs
         run: |
           go install "github.com/florianl/bluebox@${BLUEBOX_VERSION}"
@@ -123,9 +126,6 @@ jobs:
 
       - name: Initialize and update git submodules
         run: git submodule init && git submodule update
-
-      - name: Build libbpf
-        run: make libbpf
 
       - name: Build BPF
         run: make bpf
