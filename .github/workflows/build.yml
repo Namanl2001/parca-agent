@@ -61,6 +61,11 @@ jobs:
           sudo apt-get update -y
           sudo apt -y install qemu-system-x86 curl
 
+      - name: Install libbpf dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -yq libelf-dev zlib1g-dev
+
       - name: Build libbpf
         run: make libbpf
 
@@ -118,11 +123,6 @@ jobs:
 
       - name: Show clang-format version
         run: clang-format --version
-
-      - name: Install libbpf dependencies
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -yq libelf-dev zlib1g-dev
 
       - name: Initialize and update git submodules
         run: git submodule init && git submodule update
