@@ -83,6 +83,9 @@ jobs:
       - name: Build libbpf
         run: make libbpf
 
+      - name: Build BPF
+        run: make bpf
+
       - name: Build initramfs
         run: |
           go install "github.com/florianl/bluebox@${BLUEBOX_VERSION}"
