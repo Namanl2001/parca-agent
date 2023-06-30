@@ -69,11 +69,11 @@ jobs:
       - name: Initialize and update git submodules
         run: git submodule init && git submodule update
 
-      - name: Build BPF
-        run: make bpf
-
       - name: Build libbpf
         run: make libbpf
+
+      - name: Build BPF
+        run: make bpf
 
       - name: Build initramfs
         run: |
