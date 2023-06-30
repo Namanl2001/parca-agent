@@ -61,6 +61,18 @@ jobs:
           sudo apt-get update -y
           sudo apt -y install qemu-system-x86 curl
 
+      - name: Build initramfs
+        run: |
+          go install "github.com/florianl/bluebox@${BLUEBOX_VERSION}"
+          make initramfs
+
+      - name: Upload initramfs
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
+        with:
+          name: initramfs
+          path: |
+            kerneltest/initramfs.cpio
+
       - name: Download previously generated initramfs
         uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
         with:
@@ -150,15 +162,3 @@ jobs:
 
       - name: Lint
         run: make go/lint
-
-      - name: Build initramfs
-        run: |
-          go install "github.com/florianl/bluebox@${BLUEBOX_VERSION}"
-          make initramfs
-
-      - name: Upload initramfs
-        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
-        with:
-          name: initramfs
-          path: |
-            kerneltest/initramfs.cpio
